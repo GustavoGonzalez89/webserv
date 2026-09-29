@@ -1,0 +1,23 @@
+# Build
+*.o
+*.d
+webserv
+
+# Binaires fournis par 42 (testeurs) — non redistribués
+tester
+cgi_tester*
+
+# Fichiers générés pendant les tests
+www/upload/*
+!www/upload/.gitkeep
+www/db/*
+!www/db/.gitkeep
+www_server2/db/*
+!www_server2/db/.gitkeep
+*.bin
+
+# Divers
+*.pdf
+.vscode/
+CLAUDE.md
+.DS_Store

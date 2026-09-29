@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webserv Test Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: #58a6ff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            color: #8b949e;
+            margin-top: 8px;
+            font-size: 0.85rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 10px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .badge-get    { background-color: #1f6feb; color: #cae8ff; }
+        .badge-post   { background-color: #1a7f37; color: #aff0b4; }
+        .badge-delete { background-color: #b91c1c; color: #fecaca; }
+        .badge-upload { background-color: #7c3aed; color: #ede9fe; }
+
+        .card-header h2 {
+            font-size: 1rem;
+            color: #e6edf3;
+        }
+
+        .card p {
+            font-size: 0.8rem;
+            color: #8b949e;
+            line-height: 1.5;
+        }
+
+        button {
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.85rem;
+            padding: 10px 16px;
+            border-radius: 6px;
+            border: none;
+            transition: opacity 0.15s ease;
+        }
+
+        button:hover { opacity: 0.8; }
+        button:active { opacity: 0.6; }
+
+        .btn-get    { background-color: #1f6feb; color: #fff; }
+        .btn-post   { background-color: #1a7f37; color: #fff; }
+        .btn-delete { background-color: #b91c1c; color: #fff; }
+        .btn-upload { background-color: #7c3aed; color: #fff; }
+
+        pre {
+            background-color: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 12px;
+            font-size: 0.78rem;
+            color: #7ee787;
+            white-space: pre-wrap;
+            word-break: break-all;
+            min-height: 40px;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .upload-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        textarea {
+            width: 100%;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 8px;
+            color: #c9d1d9;
+            font-family: inherit;
+            font-size: 0.8rem;
+            resize: vertical;
+        }
+
+        input[type="file"] {
+            flex: 1;
+            font-family: inherit;
+            font-size: 0.8rem;
+            color: #c9d1d9;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 8px;
+            cursor: pointer;
+        }
+
+        input[type="file"]::file-selector-button {
+            background-color: #21262d;
+            color: #c9d1d9;
+            border: 1px solid #30363d;
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-family: inherit;
+            cursor: pointer;
+            margin-right: 8px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 48px;
+            font-size: 0.75rem;
+            color: #484f58;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Webserv</h1>
+    <p>HTTP/1.1 test interface — localhost:8001</p>
+</header>
+
+<div class="grid">
+
+    <!-- GET -->
+    <div class="card">
+        <div class="card-header">
+            <span class="badge badge-get">GET</span>
+            <h2>Test CGI</h2>
+        </div>
+        <p>Sends a GET request to <code>/cgi-bin/script.sh</code> and displays the raw output.</p>
+        <button id="fetchGetButton" class="btn-get">Send GET /cgi-bin/script.sh</button>
+        <pre id="cgiResponseDiv"></pre>
+    </div>
+
+    <!-- POST -->
+    <div class="card">
+        <div class="card-header">
+            <span class="badge badge-post">POST</span>
+            <h2>Send Raw Data</h2>
+        </div>
+        <p>Type any text and send it as plain text to <code>/Post</code>.</p>
+        <textarea id="postInput" rows="3" placeholder="Enter text to send..."></textarea>
+        <button id="fetchPostButton" class="btn-post">POST text to /Post</button>
+    </div>
+
+    <!-- DELETE -->
+    <div class="card">
+        <div class="card-header">
+            <span class="badge badge-delete">DELETE</span>
+            <h2>Delete Resource</h2>
+        </div>
+        <p>Sends a DELETE request to <code>/Post</code> to remove the resource.</p>
+        <button id="fetchDeleteButton" class="btn-delete">DELETE /Post</button>
+    </div>
+
+    <!-- UPLOAD -->
+    <div class="card">
+        <div class="card-header">
+            <span class="badge badge-upload">POST</span>
+            <h2>Upload File</h2>
+        </div>
+        <p>Submits a multipart/form-data request with the selected file to <code>/upload</code>.</p>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <div class="upload-row">
+                <input type="file" id="fileInput" name="file">
+                <button type="submit" class="btn-upload">Upload</button>
+            </div>
+        </form>
+        <pre id="uploadResponseDiv"></pre>
+    </div>
+
+</div>
+
+<footer>42 School — Webserv project</footer>
+
+<script>
+    document.getElementById('fetchGetButton').addEventListener('click', function() {
+        fetch("http://localhost:8001/cgi-bin/script.sh", {
+            method: 'GET'
+        })
+        .then(function(response) { return response.text(); })
+        .then(function(data) {
+            document.getElementById('cgiResponseDiv').textContent = data;
+        });
+    });
+
+    document.getElementById('fetchPostButton').addEventListener('click', function() {
+        var text = document.getElementById('postInput').value;
+        fetch("http://localhost:8001/Post", {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain' },
+            body: text
+        })
+        .then(function(response) {
+            if (response.status === 413) {
+                return response.text().then(function(html) {
+                    document.open();
+                    document.write(html);
+                    document.close();
+                });
+            }
+            alert('POST status: ' + response.status + ' ' + response.statusText);
+        })
+        .catch(function(err) {
+            alert('Error: ' + err);
+        });
+    });
+
+    document.getElementById('fetchDeleteButton').addEventListener('click', function() {
+        fetch("http://localhost:8001/Post/Post.txt", {
+            method: 'DELETE'
+        })
+        .then(function(response) {
+            alert('DELETE status: ' + response.status + ' ' + response.statusText);
+        })
+        .catch(function(err) {
+            alert('Error: ' + err);
+        });
+    });
+
+    document.getElementById('uploadForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var fileInput = document.getElementById('fileInput');
+        if (!fileInput.files[0]) {
+            document.getElementById('uploadResponseDiv').textContent = 'No file selected.';
+            return;
+        }
+        var formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+        fetch("http://localhost:8001/upload", {
+            method: 'POST',
+            body: formData
+        })
+        .then(function(response) {
+            document.getElementById('uploadResponseDiv').textContent = 'Upload status: ' + response.status;
+        });
+    });
+</script>
+
+</body>
+</html>

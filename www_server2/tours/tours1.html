@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tours — Server 2</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Courier New', monospace; background: #0d1117; color: #c9d1d9; min-height: 100vh; padding: 40px 20px; }
+        header { text-align: center; margin-bottom: 40px; }
+        header h1 { font-size: 1.8rem; color: #58a6ff; letter-spacing: 2px; text-transform: uppercase; }
+        header p { color: #8b949e; margin-top: 8px; font-size: 0.85rem; }
+        .card { max-width: 600px; margin: 0 auto; background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 32px; }
+        .card p { color: #8b949e; font-size: 0.9rem; line-height: 1.7; }
+        .badge { display: inline-block; font-size: 0.7rem; font-weight: bold; padding: 3px 8px; border-radius: 4px; background: #1a7f37; color: #aff0b4; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 16px; }
+        a { display: inline-block; margin-top: 28px; color: #58a6ff; font-size: 0.85rem; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tours</h1>
+        <p>You reached the /tours location — Server 2 (port 8042)</p>
+    </header>
+    <div class="card">
+        <span class="badge">location /tours</span>
+        <p>This page is served from <code>www_server2/tours/tours1.html</code>.<br><br>
+        It demonstrates that the <code>/tours</code> location block is working correctly, with <code>autoindex on</code> and <code>index tours1.html</code>.</p>
+        <a href="/">← Back to home</a>
+    </div>
+</body>
+</html>
